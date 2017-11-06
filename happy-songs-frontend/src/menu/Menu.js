@@ -1,9 +1,11 @@
-import React from 'react';
-import { Collapse, Navbar, NavbarToggler, NavbarBrand, Nav, NavItem, NavLink } from 'reactstrap';
+import React, {Component} from 'react';
+import { Collapse, Navbar, NavbarToggler, NavbarBrand, Nav, NavItem } from 'reactstrap';
 import {
   Link
 } from 'react-router-dom';
-export default class Menu extends React.Component {
+import {inject, observer} from 'mobx-react';
+
+var Menu = observer( class Menu extends Component {
   constructor(props) {
     super(props);
 
@@ -25,10 +27,10 @@ export default class Menu extends React.Component {
       // favoritesRoute =  <NavItem><Link className='nav-link' to='/'>Favorites</Link></NavItem>;
     }
  
-    console.log(this.props.getUser());
     let personalization = '';
-    if (this.props.getUser().email !== '') {
-      personalization = this.props.getUser().firstName + "'s ";
+    console.log(this.props)
+    if (this.props.UserStore.user.firstName != null) {
+      personalization = this.props.UserStore.getUser().firstName + "'s ";
     }
     return (
       <div>
@@ -53,4 +55,6 @@ export default class Menu extends React.Component {
       </div>
     );
   }
-}
+})
+
+export default inject("UserStore")(Menu);

@@ -1,10 +1,8 @@
 import React, { Component } from 'react'; 
-import { Button, Form, FormGroup, Label, Input, FormText } from 'reactstrap';
-import {
-  Redirect
-} from 'react-router-dom';
-import { withRouter } from 'react-router-dom';
-class SignUp extends Component{
+import { Button, FormGroup, Label, Input } from 'reactstrap';
+import {inject, observer} from 'mobx-react';
+
+var SignUp = observer(class SignUp extends Component{
   constructor() {
     super();
     this.inputfirstNameChange = this.inputfirstNameChange.bind(this);
@@ -23,8 +21,8 @@ class SignUp extends Component{
 //submitSignup() is in App.js
   handleSignup() {
     // this makes an obj to retun
-    this.props.submitSignup({
-      firstName: this.state.firstName,      
+    this.props.UserStore.submitSignup({
+      firstName: this.state.firstName,
       lastName: this.state.lastName,
       email: this.state.email,
       password: this.state.password
@@ -70,6 +68,5 @@ class SignUp extends Component{
       </div>
     );
   };
-}
-
-export default withRouter(SignUp);
+})
+export default inject('UserStore')(SignUp);

@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
 import Popularity from "./Popularity";
+import {inject, observer} from 'mobx-react';
 var FontAwesome = require('react-fontawesome');
-export default class Play extends Component{
+
+var Play = observer(class Play extends Component{
   constructor(){
     super();
     this.recordPlay = this.recordPlay.bind(this);
@@ -16,14 +18,11 @@ export default class Play extends Component{
     // do a fetch to a route, maybe pass in the track id to the route
     // find current count in db and up one
     var url = '/tracks/' + this.props.trackid;
-    console.log("this props put");
-    console.log(this.props.getUser());
-    console.log("end");
     fetch(url, {
         method: "PUT",
         headers:{"Content-Type":"application/json"}, 
         body: JSON.stringify(
-          this.props.getUser()
+          this.props.UserStore.getUser()
         )
       }).then(function (response) {
         //debugger;
@@ -54,4 +53,6 @@ export default class Play extends Component{
       </div>
     );
   };
-}
+})
+
+export default inject('UserStore', 'TrackStore')(Play);

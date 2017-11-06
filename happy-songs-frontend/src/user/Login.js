@@ -1,11 +1,9 @@
 import React, { Component } from 'react'; 
-import { Button, Form, FormGroup, Label, Input, FormText, Alert } from 'reactstrap';
-import {
-  Redirect, Link
-} from 'react-router-dom';
+import { Button, FormGroup, Label, Input } from 'reactstrap';
 import { withRouter } from 'react-router-dom';
+import {inject, observer} from 'mobx-react';
 
-class Login extends Component{
+var Login = observer(class Login extends Component{
   constructor(){
     super();
     this.inputemailChange = this.inputemailChange.bind(this);
@@ -23,7 +21,7 @@ class Login extends Component{
   
   handleLogin() {
     // this makes an obj to retun
-    this.props.submitLogin({
+    this.props.UserStore.submitLogin({
       email: this.state.email,
       password: this.state.password
     });
@@ -58,7 +56,7 @@ class Login extends Component{
         {this.state.message} - {this.props.success}
         <FormGroup>
         <Label for="email">Email</Label>{' '}
-        <Input type="email" onChange={this.inputemailChange} name="email" id="email" placeholder="you@something.com" />
+        <Input type="email" onChange={this.inputemailChange} name="email" id="email" placeholder="you@example.com" />
       </FormGroup>
         {' '}
         <FormGroup>
@@ -71,6 +69,6 @@ class Login extends Component{
       </div>
     );
   };
-}
+})
 
-export default withRouter(Login);
+export default withRouter(inject('UserStore')(Login));

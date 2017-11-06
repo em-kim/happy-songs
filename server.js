@@ -106,7 +106,6 @@ app.post("/signup", (req, res, next) => {
         success: false
       });
     } else {
-      
       console.log(user);
       user.save((error, userReturned) => {
         // currently crashes if user exists
